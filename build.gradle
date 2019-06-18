@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'org.spongepowered.plugin' version '0.9.0'
+}
+
+group = pluginGroup
+version = pluginVersion
+description = pluginDescription
+
+sourceCompatibility = 1.8
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:7.1.0'
+}
