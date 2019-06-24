@@ -1,0 +1,22 @@
+{
+	"commandConstructor": {
+		"scope": "java",
+		"prefix": "cmd",
+		"body": [
+			"public $TM_FILENAME_BASE(BMod plugin) {",
+				"\tsuper(plugin, new String[] { \"${1:Command}\", \"${2:Alias}\"}, Strings.COMMAND_${1:Command}_SUMMERY,",
+					"\t\tStrings.COMMAND_${1:Command}_DESCRIPTION, Permissions.COMMAND_${1:Command});",
+			"}",
+		],
+		"description": "Command constructor"
+	},
+	"StringCommand": {
+		"scope": "java",
+		"prefix": "strcmd",
+		"body": [
+			"public static Text COMMAND_${1:COMMAND}_SUMMERY = Text.of($2);",
+			"public static Text COMMAND_${1:COMMAND}_DESCRIPTION = Text.of($3);"
+		],
+		"description": "Command String entry"
+	}
+}
