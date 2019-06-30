@@ -74,8 +74,6 @@ Minecraft has a large amount of plugins to perform the same common commands,
 these are notably a mix of player control (banning, kicking, warning players)
 and movement commands (set homes, teleport to other players, defined locations)
 
-[A full list of commands, their descriptions and configuration is here.](Commands.md)
-
 ### Chat Formatting
 
 The chat is one of the most seen aspect of minecraft and is essential in communicating
