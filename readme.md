@@ -4,7 +4,7 @@ BMod is a mod for the popular minecraft video game. It is designed to be
 ran on Sponge, which is an application programming interface allowing easy bindings
 to obfuscated minecraft server code.
 
-The Bangor League Gaming Society (BUGL) is a society at bangor university that
+The Bangor League Gaming Society (BUGL) is a society at Bangor University that
 require a way for players to 'claim' part of the level they play in.
 Although there are current products on the market, they lack needed features and
 are undocumented. BMod aims to resolve these issues.
@@ -24,7 +24,7 @@ application development:
 - Storage Solutions
 	- Including databases, the system will need to store persistent data.
 - Full Configuration
-	- All features must be confxigurable, and support real-time configuration changes.
+	- All features must be configurable, and support real-time configuration changes.
 - Multithreading
 	- Multithreaded services include processing and I/O.
 - Resource limits
@@ -97,7 +97,7 @@ the environment (PvE) and ones who prefer player vs player combat (PvP).
 
 The servers BUGL run must accommodate for both types of player, and thus must provide
 a way for selectable player and land protection. An issue is raised due to the modded
-nature of the minecraft instance;- it is not possible to hardcode the interactions
+nature of the minecraft instance;- it is not possible to hard-code the interactions
 due to dynamic damage causes and interaction effects.
 
 ## User Interface
@@ -114,7 +114,7 @@ manipulate and edit the world the player is in, such as displaying particle effe
 
 ## Technical
 
-Minecraft is a game based on Java, and its source is obfuscated. However, deobfuscation
+Minecraft is a game based on Java, and its source is obfuscated. However, de-obfuscation
 mappings have been made by the community. This has resulted in a central modding
 platform called [Minecraft Forge](https://github.com/MinecraftForge).
 
