@@ -10,7 +10,7 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * StatsCommand
+ * View statistics about the current player, such as mob kills and playtime
  */
 public class StatsCommand extends AbstractCommand {
 

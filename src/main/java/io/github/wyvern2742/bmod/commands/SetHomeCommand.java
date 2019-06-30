@@ -10,7 +10,8 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * SetHomeCommand
+ * Sets the home of the current player.
+ * @see HomeCommand
  */
 public class SetHomeCommand extends AbstractCommand {
 
@@ -21,6 +22,6 @@ public class SetHomeCommand extends AbstractCommand {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		return null;
+		return CommandResult.empty();
 	}
 }

@@ -10,14 +10,12 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * Teleports the player to the set spawn
- * @see SetSpawnCommand
+ * TestCommand
  */
-public class SpawnCommand extends AbstractCommand {
+public class TestCommand extends AbstractCommand {
 
-	public SpawnCommand(BMod plugin) {
-		super(plugin, new String[] { "spawn", }, Strings.COMMAND_SPAWN_SUMMERY, Strings.COMMAND_SPAWN_DESCRIPTION,
-				Permissions.COMMAND_SPAWN);
+	public TestCommand(BMod plugin) {
+		super(plugin, new String[] { "test" }, Strings.COMMAND_TEST_SUMMERY, Strings.COMMAND_TEST_DESCRIPTION, Permissions.COMMAND_TEST);
 	}
 
 	@Override

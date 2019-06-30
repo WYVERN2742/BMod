@@ -10,7 +10,7 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * ListCommand
+ * Displays a list of users currently playing on the server
  */
 public class ListCommand extends AbstractCommand {
 

@@ -8,7 +8,7 @@ import org.spongepowered.api.text.format.TextColors;
  * also contains methods used to format text.
  */
 public class Strings {
-	/** How many characters the default chat width fits */
+	/** How many characters Minecraft's default chat width fits */
 	public static int MINECRAFT_CHAT_WIDTH = 53;
 
 	/** Standard Chat Prefix */
@@ -38,6 +38,9 @@ public class Strings {
 
 	public static Text COMMAND_SET_HOME_SUMMERY = Text.of("Sets your home");
 	public static Text COMMAND_SET_HOME_DESCRIPTION = Text.of("Set your home to the current location. This can be teleported to by using the home command.");
+
+	public static Text COMMAND_TEST_SUMMERY = Text.of("Developer Test Command");
+	public static Text COMMAND_TEST_DESCRIPTION = Text.of("Only Available during Development");
 
 	/**
 	 * Checks to see weather the provided number of characters will overflow

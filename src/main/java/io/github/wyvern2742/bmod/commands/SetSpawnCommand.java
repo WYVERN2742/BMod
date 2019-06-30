@@ -10,7 +10,8 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * SetSpawnCommand
+ * Set the spawn of the server. All players who join the server will start at this location.
+ * @see SpawnCommand
  */
 public class SetSpawnCommand extends AbstractCommand {
 

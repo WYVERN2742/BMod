@@ -10,7 +10,7 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * StatusCommand
+ * View the status of the server, such as Ticks Per Second, number of players and RAM usage.
  */
 public class StatusCommand extends AbstractCommand {
 

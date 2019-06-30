@@ -19,6 +19,7 @@ import io.github.wyvern2742.bmod.commands.SetSpawnCommand;
 import io.github.wyvern2742.bmod.commands.SpawnCommand;
 import io.github.wyvern2742.bmod.commands.StatsCommand;
 import io.github.wyvern2742.bmod.commands.StatusCommand;
+import io.github.wyvern2742.bmod.commands.TestCommand;
 
 @Plugin(id = "bmod",name="BMod",version="0.1",description="All you ever need for a server.")
 public class BMod {

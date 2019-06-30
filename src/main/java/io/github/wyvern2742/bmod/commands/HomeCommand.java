@@ -10,7 +10,8 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * HomeCommand
+ * Teleports the user to their set home
+ * @see SetHomeCommand
  */
 public class HomeCommand extends AbstractCommand {
 
@@ -21,6 +22,6 @@ public class HomeCommand extends AbstractCommand {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		return null;
+		return CommandResult.empty();
 	}
 }
