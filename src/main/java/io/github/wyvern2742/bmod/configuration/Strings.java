@@ -12,7 +12,7 @@ public class Strings {
 	public static int MINECRAFT_CHAT_WIDTH = 53;
 
 	/** Standard Chat Prefix */
-	public static Text PREFIX = Text.of(TextColors.GOLD,"> ");
+	public static Text PREFIX = Text.of(TextColors.GOLD,"> ",TextColors.GRAY);
 
 	// Command summery should be about 40 characters long.
 	public static Text COMMAND_HELP_SUMMERY = Text.of("Show BMod's command list");
