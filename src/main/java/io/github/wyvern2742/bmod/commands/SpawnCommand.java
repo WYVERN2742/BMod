@@ -38,6 +38,7 @@ public class SpawnCommand extends AbstractCommand {
 				if (spawn.isPresent()) {
 					player.setLocation(spawn.get());
 					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY,"Teleported to spawn"));
+					return CommandResult.success();
 				} else {
 					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn is not set"));
 				}
