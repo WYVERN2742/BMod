@@ -23,6 +23,8 @@ import io.github.wyvern2742.bmod.commands.SpawnCommand;
 import io.github.wyvern2742.bmod.commands.StatsCommand;
 import io.github.wyvern2742.bmod.commands.StatusCommand;
 import io.github.wyvern2742.bmod.configuration.database.DatabaseManager;
+import io.github.wyvern2742.bmod.event.ChunkLoadEvent;
+import io.github.wyvern2742.bmod.event.ChunkUnloadEvent;
 import io.github.wyvern2742.bmod.event.SpawnEvent;
 
 @Plugin(id = "bmod", name = "BMod", version = "0.1", description = "All you ever need for a server.")
@@ -76,6 +78,10 @@ public class BMod {
 	private void registerListeners(){
 		logger.debug("Registering Spawn Listener");
 		Sponge.getEventManager().registerListeners(this, new SpawnEvent(this));
+		logger.debug("Registering Chunk Listeners");
+		Sponge.getEventManager().registerListeners(this, new ChunkLoadEvent(this));
+		Sponge.getEventManager().registerListeners(this, new ChunkUnloadEvent(this));
+
 	}
 
 	public AbstractCommand[] getCommands() {

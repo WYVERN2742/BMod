@@ -37,7 +37,7 @@ public class ListCommand extends AbstractCommand {
 			textBuilder.append(Text.of(Strings.PREFIX, TextColors.GRAY, "There is ", TextColors.GOLD, players.length,
 					TextColors.GRAY, " player online"));
 		} else {
-
+			// English Plural
 			textBuilder.append(Text.of(Strings.PREFIX, TextColors.GRAY, "There are ", TextColors.GOLD, players.length,
 					TextColors.GRAY, " players online"));
 		}

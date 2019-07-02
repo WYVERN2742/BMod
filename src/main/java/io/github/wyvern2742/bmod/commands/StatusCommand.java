@@ -1,28 +1,111 @@
 package io.github.wyvern2742.bmod.commands;
 
+import java.util.Collection;
+
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Text.Builder;
+import org.spongepowered.api.text.action.TextActions;
+import org.spongepowered.api.text.format.TextColors;
 
 import io.github.wyvern2742.bmod.BMod;
 import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
+import io.github.wyvern2742.bmod.logic.Chunks;
 
 /**
- * View the status of the server, such as Ticks Per Second, number of players and RAM usage.
+ * View the status of the server, such as Ticks Per Second, number of players
+ * and RAM usage.
  */
 public class StatusCommand extends AbstractCommand {
 
 	public StatusCommand(BMod plugin) {
-		super(plugin, new String[] { "status", "st"}, Strings.COMMAND_STATUS_SUMMERY,
-			Strings.COMMAND_STATUS_DESCRIPTION, Permissions.COMMAND_STATUS);
+		super(plugin, new String[] { "status", "st" }, Strings.COMMAND_STATUS_SUMMERY,
+				Strings.COMMAND_STATUS_DESCRIPTION, Permissions.COMMAND_STATUS);
 	}
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		return CommandResult.empty();
+		Collection<Player> players = Sponge.getServer().getOnlinePlayers();
+		Builder responseText = Text.builder();
+		boolean isPlayer = (src instanceof Player);
+
+		// Player ping
+		if (players.size() != 0) {
+			int average = 0;
+			for (Player player : players) {
+				average += player.getConnection().getLatency();
+			}
+			average = average / Sponge.getServer().getOnlinePlayers().size();
+
+			Builder pingText = Text.builder();
+			if (isPlayer) {
+				// For the player, show their ping with the hover-over showing average
+				Builder hoverText = Text.builder();
+				hoverText.append(Text.of(TextColors.GRAY, "Average Ping: ", TextColors.GOLD, average, Text.NEW_LINE));
+
+				Player player = (Player) src;
+				int playerLatency = player.getConnection().getLatency();
+
+				pingText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Your Ping: "));
+
+				if (playerLatency < average * 0.9) {
+					// Good Ping
+					pingText.append(Text.of(TextColors.GREEN, playerLatency, "ms"));
+					hoverText.append(Text.of(TextColors.GREEN, "Your ping is better than average"));
+				} else if (playerLatency > average * 1.1) {
+					// Bad Ping
+					pingText.append(Text.of(TextColors.RED, playerLatency, "ms"));
+					hoverText.append(Text.of(TextColors.RED, "Your ping is worse than average"));
+				} else {
+					// Average ping
+					pingText.append(Text.of(TextColors.YELLOW, playerLatency, "ms"));
+					hoverText.append(Text.of(TextColors.YELLOW, "Your ping is average"));
+				}
+
+				pingText.onHover(TextActions.showText(hoverText.build()));
+			} else {
+				// For the console, show the average ping, assuming 100 is bad and 200 is worse
+				pingText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Average Ping: "));
+				if (average < 100) {
+					pingText.append(Text.of(TextColors.GREEN, average, "ms"));
+				} else if (average < 200) {
+					pingText.append(Text.of(TextColors.YELLOW, average, "ms"));
+				} else {
+					pingText.append(Text.of(TextColors.RED, average, "ms"));
+				}
+			}
+			responseText.append(Text.of(pingText.build(), Text.NEW_LINE));
+		}
+
+		// Loaded Chunks
+		Builder chunkText = Text.builder();
+		chunkText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Loaded Chunks: ",TextColors.GOLD, Chunks.loadedChunks()));
+		if (isPlayer) {
+			// Add hover for player
+			Builder hoverText = Text.builder();
+			hoverText.append(Text.of(TextColors.GRAY, "Chunks per player: ",TextColors.GOLD, Chunks.loadedChunks() / players.size()));
+			chunkText.onHover(TextActions.showText(hoverText.build()));
+		} else {
+			// Caller is console
+			if (players.size() != 0) {
+				chunkText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Chunks per player: ", TextColors.GOLD, Chunks.loadedChunks() / players.size()));
+			}
+		}
+		responseText.append(Text.of(chunkText.build()));
+
+		if (!isPlayer) {
+			// Pad out with a newline for better display on consoles
+			src.sendMessage(Text.of(Text.NEW_LINE, responseText.build()));
+		} else {
+			src.sendMessage(responseText.build());
+		}
+
+		return CommandResult.success();
 	}
-
-
 }

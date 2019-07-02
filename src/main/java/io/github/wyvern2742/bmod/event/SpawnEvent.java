@@ -29,13 +29,12 @@ public class SpawnEvent {
 	}
 
 	/**
-	 * Handles the chat even by parsing it for blacklisted words, and replacing any
-	 * found.
+	 * Detects when a player respawns and teleports them to spawn if no bed is set.
 	 *
-	 * @param event Chat Message Event
+	 * @param event Player Respawn Event
 	 */
 	@Listener(order = Order.DEFAULT)
-	public void onChat(RespawnPlayerEvent event, @First Player player) {
+	public void onRespawn(RespawnPlayerEvent event, @First Player player) {
 		if (event.isBedSpawn()) {
 			// Do not handle respawn if player has a bed
 			return;
