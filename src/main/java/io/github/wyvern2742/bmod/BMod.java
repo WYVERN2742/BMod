@@ -23,6 +23,7 @@ import io.github.wyvern2742.bmod.commands.SpawnCommand;
 import io.github.wyvern2742.bmod.commands.StatsCommand;
 import io.github.wyvern2742.bmod.commands.StatusCommand;
 import io.github.wyvern2742.bmod.configuration.database.DatabaseManager;
+import io.github.wyvern2742.bmod.event.SpawnEvent;
 
 @Plugin(id = "bmod", name = "BMod", version = "0.1", description = "All you ever need for a server.")
 public class BMod {
@@ -46,13 +47,13 @@ public class BMod {
 
 	@Listener
 	public void onServerStart(GameStartedServerEvent event) {
-		logger.info("Registering Commands");
 		registerCommands();
+		registerListeners();
 		logger.info("Loaded with " + commands.length + " commands");
 	}
 
 	private void registerCommands() {
-
+		logger.debug("Registering Commands");
 		this.commands = new AbstractCommand[] { new HelpCommand(this), new SetSpawnCommand(this), new HomeCommand(this),
 				new ListCommand(this), new StatusCommand(this), new StatsCommand(this), new SetHomeCommand(this),
 				new SpawnCommand(this) };
@@ -70,6 +71,11 @@ public class BMod {
 			// Register with sponge
 			Sponge.getCommandManager().register(this, cmdspec.build(), (String[]) command.getAliases());
 		}
+	}
+
+	private void registerListeners(){
+		logger.debug("Registering Spawn Listener");
+		Sponge.getEventManager().registerListeners(this, new SpawnEvent(this));
 	}
 
 	public AbstractCommand[] getCommands() {
