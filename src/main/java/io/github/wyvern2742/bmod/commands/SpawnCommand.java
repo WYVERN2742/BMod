@@ -37,9 +37,9 @@ public class SpawnCommand extends AbstractCommand {
 				Optional<Location<World>> spawn = Warps.getWarp("spawn");
 				if (spawn.isPresent()) {
 					player.setLocation(spawn.get());
-					src.sendMessage(Text.of(Strings.PREFIX, "Teleported to spawn"));
+					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY,"Teleported to spawn"));
 				} else {
-					src.sendMessage(Text.of(Strings.PREFIX, "Spawn is not set"));
+					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn is not set"));
 				}
 			} catch (Exception e) {
 				src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to teleport to spawn"));

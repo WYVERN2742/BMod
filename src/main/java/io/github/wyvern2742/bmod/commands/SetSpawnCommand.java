@@ -32,7 +32,7 @@ public class SetSpawnCommand extends AbstractCommand {
 			Player player = (Player) src;
 			try {
 				Warps.setWarp("spawn", player.getLocation());
-				src.sendMessage(Text.of(Strings.PREFIX, "Spawn set to current position"));
+				src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn set to current position"));
 			} catch (Exception e) {
 				src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to create spawn point"));
 				plugin.logger.error("Failed to set spawn point", e);
@@ -40,5 +40,4 @@ public class SetSpawnCommand extends AbstractCommand {
 		}
 		return CommandResult.empty();
 	}
-
 }
