@@ -1,4 +1,4 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
 import java.util.Optional;
 

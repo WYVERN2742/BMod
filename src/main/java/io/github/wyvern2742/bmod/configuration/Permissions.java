@@ -17,4 +17,5 @@ public class Permissions {
 	public static String COMMAND_STATUS = "bmod.status";
 	public static String COMMAND_LIST = "bmod.list";
 	public static String COMMAND_STATS = "bmod.stats";
+	public static String COMMAND_PLUGINS = "bmod.plugins";
 }

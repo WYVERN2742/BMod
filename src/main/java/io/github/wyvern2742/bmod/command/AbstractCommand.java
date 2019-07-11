@@ -1,4 +1,4 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
 import org.spongepowered.api.command.args.CommandElement;
 import org.spongepowered.api.command.spec.CommandExecutor;

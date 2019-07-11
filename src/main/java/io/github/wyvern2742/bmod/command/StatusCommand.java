@@ -1,5 +1,6 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.spongepowered.api.Sponge;
@@ -11,11 +12,13 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Text.Builder;
 import org.spongepowered.api.text.action.TextActions;
+import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
 import io.github.wyvern2742.bmod.BMod;
 import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
+import io.github.wyvern2742.bmod.exception.PlayerNoPermissionException;
 import io.github.wyvern2742.bmod.logic.Chunks;
 
 /**
@@ -34,6 +37,8 @@ public class StatusCommand extends AbstractCommand {
 		Collection<Player> players = Sponge.getServer().getOnlinePlayers();
 		Builder responseText = Text.builder();
 		boolean isPlayer = (src instanceof Player);
+
+		// Players
 
 		// Player ping
 		if (players.size() != 0) {
@@ -98,6 +103,34 @@ public class StatusCommand extends AbstractCommand {
 			}
 		}
 		responseText.append(Text.of(chunkText.build()));
+
+		// Plugins
+		try {
+			responseText.append(Text.of(Text.NEW_LINE,PluginCommand.getPlugins(src)));
+		} catch (PlayerNoPermissionException e) {
+			//No permission to list plugins, fail silently
+		}
+
+		// TPS
+		TextColor tpsColor;
+		Double tps = Sponge.getServer().getTicksPerSecond();
+		if (Sponge.getServer().getTicksPerSecond() == 20.0) {
+			tpsColor = TextColors.DARK_GREEN;
+		} else if (tps > 19) {
+			tpsColor = TextColors.GREEN;
+		} else if (tps > 18) {
+			tpsColor = TextColors.YELLOW;
+		} else if (tps > 17) {
+			tpsColor = TextColors.GOLD;
+		} else if (tps > 15) {
+			tpsColor = TextColors.RED;
+		} else {
+			tpsColor = TextColors.DARK_RED;
+		}
+		responseText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Ticks Per Second: ", tpsColor, new DecimalFormat("0.00").format(tps)));
+
+		// Ram and free resources
+
 
 		if (!isPlayer) {
 			// Pad out with a newline for better display on consoles

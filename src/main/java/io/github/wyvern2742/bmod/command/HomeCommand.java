@@ -1,4 +1,4 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -10,18 +10,18 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * View statistics about the current player, such as mob kills and playtime
+ * Teleports the user to their set home
+ * @see SetHomeCommand
  */
-public class StatsCommand extends AbstractCommand {
+public class HomeCommand extends AbstractCommand {
 
-	public StatsCommand(BMod plugin) {
-		super(plugin, new String[] { "stats", "s"}, Strings.COMMAND_STATS_SUMMERY,
-			Strings.COMMAND_STATS_DESCRIPTION, Permissions.COMMAND_STATS);
+	public HomeCommand(BMod plugin) {
+		super(plugin, new String[] { "home" }, Strings.COMMAND_HOME_SUMMERY, Strings.COMMAND_HOME_DESCRIPTION,
+				Permissions.COMMAND_HOME);
 	}
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		return CommandResult.empty();
 	}
-
 }

@@ -42,6 +42,9 @@ public class Strings {
 	public static Text COMMAND_TEST_SUMMERY = Text.of("Developer Test Command");
 	public static Text COMMAND_TEST_DESCRIPTION = Text.of("Only Available during Development");
 
+	public static Text COMMAND_PLUGINS_SUMMERY = Text.of("List server plugins");
+	public static Text COMMAND_PLUGINS_DESCRIPTION = Text.of("View a list of loaded server plugins");
+
 	/**
 	 * Checks to see weather the provided number of characters will overflow
 	 * the default Minecraft Textbox size.

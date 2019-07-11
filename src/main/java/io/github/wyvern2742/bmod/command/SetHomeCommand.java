@@ -1,4 +1,4 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -10,14 +10,14 @@ import io.github.wyvern2742.bmod.configuration.Permissions;
 import io.github.wyvern2742.bmod.configuration.Strings;
 
 /**
- * Teleports the user to their set home
- * @see SetHomeCommand
+ * Sets the home of the current player.
+ * @see HomeCommand
  */
-public class HomeCommand extends AbstractCommand {
+public class SetHomeCommand extends AbstractCommand {
 
-	public HomeCommand(BMod plugin) {
-		super(plugin, new String[] { "home" }, Strings.COMMAND_HOME_SUMMERY, Strings.COMMAND_HOME_DESCRIPTION,
-				Permissions.COMMAND_HOME);
+	public SetHomeCommand(BMod plugin) {
+		super(plugin, new String[] { "sethome", "homeset","shome","seth" }, Strings.COMMAND_SET_HOME_SUMMERY,
+				Strings.COMMAND_SET_HOME_DESCRIPTION, Permissions.COMMAND_SET_HOME);
 	}
 
 	@Override

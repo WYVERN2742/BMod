@@ -1,4 +1,4 @@
-package io.github.wyvern2742.bmod.commands;
+package io.github.wyvern2742.bmod.command;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
@@ -27,11 +27,33 @@ public class ListCommand extends AbstractCommand {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+		src.sendMessage(getPlayers(src, !(src instanceof Player)));
+		return CommandResult.success();
+	}
+
+	public static Text getPlayers(CommandSource src) {
+		return getPlayers(src, false);
+	}
+
+	public static Text getPlayers(CommandSource src, boolean longForm) {
+		boolean supportsHover = src instanceof Player;
+
 		Player[] players = Sponge.getServer().getOnlinePlayers()
 				.toArray(new Player[Sponge.getServer().getOnlinePlayers().size()]);
 
-		Builder textBuilder = Text.builder();
+		if (players.length == 0) {
+			// No players online
+			return Text.of(Strings.PREFIX, TextColors.GRAY, "There are no players online");
+		}
 
+		if (longForm) {
+			// Return longForm output
+			return buildLongForm(players);
+		}
+
+		// Construct chat text
+
+		Builder textBuilder = Text.builder();
 		if (players.length == 1) {
 			// English single
 			textBuilder.append(Text.of(Strings.PREFIX, TextColors.GRAY, "There is ", TextColors.GOLD, players.length,
@@ -44,10 +66,7 @@ public class ListCommand extends AbstractCommand {
 
 		if (players.length == 0) {
 			// No players are online, exit early for speed
-			src.sendMessage(textBuilder.build());
-
-			// * Incorrect documentation for CommandResult.successCount()
-			return CommandResult.successCount(0);
+			return textBuilder.build();
 		}
 
 		Builder playerNames = Text.builder();
@@ -69,8 +88,7 @@ public class ListCommand extends AbstractCommand {
 		if (src instanceof Player) {
 			// Caller is a player, add hovertext to show all players
 			Builder hoverText = Text.builder();
-			hoverText.append(
-					Text.of(TextColors.GOLD, "Current Players ", TextColors.GRAY, players.length, Text.NEW_LINE));
+			hoverText.append(Text.of(TextColors.GOLD, "Players", Text.NEW_LINE));
 			hoverText.append(Text.of(TextColors.GRAY, playerNames.build()));
 
 			textBuilder.onHover(TextActions.showText(hoverText.build()));
@@ -78,8 +96,9 @@ public class ListCommand extends AbstractCommand {
 			// Caller is console, add all player's names to main text body
 			textBuilder.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, playerNames.build()));
 		}
+	}
 
-		src.sendMessage(textBuilder.build());
-		return CommandResult.empty();
+	private static Text buildLongForm(Player[] players) {
+
 	}
 }
