@@ -64,26 +64,7 @@ public class ListCommand extends AbstractCommand {
 					TextColors.GRAY, " players online"));
 		}
 
-		if (players.length == 0) {
-			// No players are online, exit early for speed
-			return textBuilder.build();
-		}
 
-		Builder playerNames = Text.builder();
-
-		// Construct list of player names
-		for (int i = 0; i < players.length; i++) {
-			Player player = players[i];
-
-			if (player.getDisplayNameData().displayName().exists()) {
-				playerNames.append(player.getDisplayNameData().displayName().get());
-			} else {
-				playerNames.append(Text.of(player.getName()));
-			}
-			if (i + 1 != players.length) {
-				playerNames.append(Text.of(", "));
-			}
-		}
 
 		if (src instanceof Player) {
 			// Caller is a player, add hovertext to show all players
@@ -99,6 +80,20 @@ public class ListCommand extends AbstractCommand {
 	}
 
 	private static Text buildLongForm(Player[] players) {
+		Builder longFormText = Text.builder();
 
+		// Construct list of player names
+		for (int i = 0; i < players.length; i++) {
+			Player player = players[i];
+
+			if (player.getDisplayNameData().displayName().exists()) {
+				longFormText.append(player.getDisplayNameData().displayName().get());
+			} else {
+				longFormText.append(Text.of(player.getName()));
+			}
+			if (i + 1 != players.length) {
+				longFormText.append(Text.of(", "));
+			}
+		}
 	}
 }
