@@ -9,8 +9,8 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.command.spec.CommandSpec.Builder;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
-import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 
 import io.github.wyvern2742.bmod.command.AbstractCommand;
@@ -49,7 +49,7 @@ public class BMod {
 	}
 
 	@Listener
-	public void onServerStart(GameStartedServerEvent event) {
+	public void onInitialize(GameInitializationEvent event) {
 		registerCommands();
 		registerListeners();
 		logger.info("Loaded with " + commands.length + " commands");
