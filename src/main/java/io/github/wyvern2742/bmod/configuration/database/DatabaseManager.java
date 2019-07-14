@@ -117,13 +117,18 @@ public class DatabaseManager {
 	public void constructDatabase() throws SQLException {
 		try (Connection conn = ds.getConnection()) {
 			// Drop database
-			PreparedStatement cleanDatabase = conn.prepareStatement("DROP TABLE IF EXISTS Locations");
+			PreparedStatement cleanDatabase = conn.prepareStatement("DROP TABLE IF EXISTS Locations; DROP TABLE IF EXISTS PairedLocations");
 			cleanDatabase.execute();
 
 			// Create Location table
 			PreparedStatement locationStmt = conn.prepareStatement(
 					"CREATE TABLE Locations(name VARCHAR(32) NOT NULL, x DOUBLE NOT NULL, y DOUBLE NOT NULL, z DOUBLE NOT NULL, world VARCHAR(32), PRIMARY KEY(name))");
 			locationStmt.execute();
+
+			// Create PersonalLocation table
+			PreparedStatement PairedLocationStmt = conn.prepareStatement(
+					"CREATE TABLE PairedLocations(uuid CHAR(36) NOT NULL, name VARCHAR(32) NOT NULL, x DOUBLE NOT NULL, y DOUBLE NOT NULL, z DOUBLE NOT NULL, world VARCHAR(32), PRIMARY KEY(uuid, name))");
+			PairedLocationStmt.execute();
 		}
 	}
 }

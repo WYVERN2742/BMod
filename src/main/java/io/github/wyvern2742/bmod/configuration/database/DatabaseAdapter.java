@@ -142,4 +142,78 @@ public class DatabaseAdapter {
 		}
 		return Optional.of(new Location<World>(world, pos));
 	}
+
+
+	/**
+	 * Returns an {@link HashMap} of all {@link Location} instances related to the provided UUID
+	 * in the database. These can be accessed by using their name as the key, or by using the inbuilt
+	 * HashMap iterator methods.
+	 * <p>
+	 * If no PairedLocations are set, the returned hashmap will be empty.
+	 *
+	 * @param uuid Unique identifier linked to the location
+	 * @return {@link HashMap} of {@link Location}s, with their name as key
+	 * @throws SQLException
+	 */
+	public static HashMap<String, Location<World>> getPairedLocations(String uuid) throws SQLException {
+		DatabaseLink link = new DatabaseLink();
+		HashMap<String, Location<World>> locations = new HashMap<String, Location<World>>();
+
+		for (HashMap<String, String> location : link.listPairedLocations(uuid)) {
+			// Loop each hashmap location, and create a Location
+			Optional<Location<World>> world = createLocation(location);
+
+			if (world.isPresent()) {
+				locations.put(location.get("name"), world.get());
+			}
+		}
+		return locations;
+	}
+
+	/**
+	 * Returns a location with a given name related to the provided UUID.
+	 * <p>
+	 * If the location with the provided name does not exist,
+	 * {@link Optional#isPresent()} will return false
+	 *
+	 * @param uuid Unique Identifier linked to the location
+	 * @param name Name of the location to obtain
+	 * @return {@link Location} with the provided name
+	 * @throws SQLException Thrown if any error is encountered reading the location
+	 *                      from the database
+	 */
+	public static Optional<Location<World>> getPairedLocation(String uuid, String name) throws SQLException {
+		DatabaseLink link = new DatabaseLink();
+
+		HashMap<String, String> location = link.getPairedLocation(uuid, name);
+		if (location.size() == 0) {
+			// Hashmap is empty, no locations are defined
+			return Optional.empty();
+		}
+		return createLocation(location);
+	}
+
+	/**
+	 * Save the provided location to the database related to the UUID, overwriting any paired location with the
+	 * name already.
+	 *
+	 * @param uuid     Unique identifier linked to the location
+	 * @param name     Name of the location to save
+	 * @param location Location to save
+	 * @return Returns True if the location was saved successfully, false otherwise
+	 * @throws SQLException Thrown if any issues occurred when updating the database
+	 */
+	public static boolean setPairedLocation(String uuid, String name, Location<World> location) throws SQLException {
+		DatabaseLink link = new DatabaseLink();
+		int updated = 0;
+		if (link.pairedLocationExists(uuid, name)) {
+			updated = link.updatePairedLocation(uuid, name, location.getPosition().getX(), location.getPosition().getY(),
+					location.getPosition().getZ(), location.getExtent().getName());
+		} else {
+			updated = link.newPairedLocation(uuid, name, location.getPosition().getX(), location.getPosition().getY(),
+					location.getPosition().getZ(), location.getExtent().getName());
+		}
+		return !(updated == 0);
+	}
+
 }
