@@ -60,7 +60,7 @@ public class PluginCommand extends AbstractCommand {
 
 		Builder basicText = Text.builder();
 		basicText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "In total, there are ", TextColors.GOLD,
-				plugins.length, TextColors.GRAY, " plugins enabled."));
+				plugins.length, TextColors.GRAY, " plugins enabled"));
 
 		if (supportsHover) {
 			basicText.onHover(TextActions.showText(buildLongForm(plugins)));
