@@ -79,19 +79,19 @@ public class ListCommand extends AbstractCommand {
 		}
 
 		Builder longFormText = Text.builder();
-		longFormText.append(Text.of(TextColors.GRAY));
+		longFormText.append();
 
 		// Construct list of player names
 		for (int i = 0; i < players.length; i++) {
 			Player player = players[i];
 
 			if (player.getDisplayNameData().displayName().exists()) {
-				longFormText.append(player.getDisplayNameData().displayName().get());
+				longFormText.append(Text.of(TextColors.GRAY, player.getDisplayNameData().displayName().get()));
 			} else {
-				longFormText.append(Text.of(player.getName()));
+				longFormText.append(Text.of(TextColors.GRAY, player.getName()));
 			}
 			if (i + 1 != players.length) {
-				longFormText.append(Text.of(", "));
+				longFormText.append(Text.of(TextColors.GRAY, ", "));
 			}
 		}
 		return longFormText.build();
