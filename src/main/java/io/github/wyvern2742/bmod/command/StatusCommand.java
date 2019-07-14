@@ -135,39 +135,40 @@ public class StatusCommand extends AbstractCommand {
 				new DecimalFormat("0.00").format(tps), Text.NEW_LINE));
 
 		// Ram and free resources
+		Builder memoryText = Text.builder();
 
 		// Note that freeMemory() is the memory inside the JVM that is ready for new
-		// objects
-		// In the case of the server, we are only concerned with the amount of memory
-		// the process
-		// has reserved, and the maximum amount we can reserve.
-		Builder memoryText = Text.builder();
-		// Maximum amount of memory the server process can use (-Xmx)
-		long maxMemory = Runtime.getRuntime().maxMemory();
+		// objects In the case of the server, we are only concerned with the amount of
+		// memory the process has reserved, and the maximum amount we can reserve.
+		// We divide the values by 0x100000 to return the amount of memory used in MB
 
-		// ! This is returning strange values, need to fix and correct to MB
+		// Maximum amount of memory the server process can use (-Xmx)
+		long maxMemory = Runtime.getRuntime().maxMemory() / (int) 0x100000;
+
+		// Memory already allocated to the JVM, excluding empty memory
+		long usedMemory = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (int) 0x100000;
+
 		if (maxMemory == Integer.MAX_VALUE) {
 			// No max memory limit
-			memoryText.append(Text.of("Using ", TextColors.GOLD, Runtime.getRuntime().totalMemory() / 2048,
-					" ", TextColors.GRAY, "of RAM"));
+			memoryText.append(Text.of("Using ", TextColors.GOLD, usedMemory, "MB ", TextColors.GRAY, "of RAM"));
 		} else {
-			long currentMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			TextColor memoryColor;
-			if (currentMemory > maxMemory * 0.9) {
+			if (usedMemory > maxMemory * 0.9) {
 				memoryColor = TextColors.DARK_RED;
-			} else if (currentMemory > maxMemory * 0.8) {
+			} else if (usedMemory > maxMemory * 0.8) {
 				memoryColor = TextColors.RED;
-			} else if (currentMemory > maxMemory * 0.7) {
+			} else if (usedMemory > maxMemory * 0.7) {
 				memoryColor = TextColors.GOLD;
-			} else if (currentMemory > maxMemory * 0.6) {
+			} else if (usedMemory > maxMemory * 0.6) {
 				memoryColor = TextColors.YELLOW;
-			} else if (currentMemory > maxMemory * 0.5) {
+			} else if (usedMemory > maxMemory * 0.5) {
 				memoryColor = TextColors.GREEN;
 			} else {
 				memoryColor = TextColors.DARK_GREEN;
 			}
-			memoryText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Using ", memoryColor, currentMemory/2048, " / ",
-					maxMemory/2048, " (", new DecimalFormat("0.00").format((((double) currentMemory / (double) maxMemory)*100)), "%)",
+			memoryText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Using ", memoryColor, usedMemory, "MB / ",
+					maxMemory, "MB (",
+					new DecimalFormat("0.00").format((((double) usedMemory / (double) maxMemory) * 100)), "%)",
 					TextColors.GRAY, " of RAM"));
 		}
 		responseText.append(memoryText.build());
