@@ -16,7 +16,7 @@ abstract public class AbstractCommand implements CommandExecutor {
 	protected final BMod plugin;
 	protected String[] aliases;
 
-	// Note: summery should be 43 - aliases[1] characters in length
+	// Note: Summery is recommended to be maximum 43 - aliases[1] characters in length
 	protected Text summery;
 	protected Text description;
 
