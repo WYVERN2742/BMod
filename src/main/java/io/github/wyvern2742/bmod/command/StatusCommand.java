@@ -169,8 +169,20 @@ public class StatusCommand extends AbstractCommand {
 			memoryText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Using ", memoryColor, usedMemory, "MB / ",
 					maxMemory, "MB (",
 					new DecimalFormat("0.00").format((((double) usedMemory / (double) maxMemory) * 100)), "%)",
-					TextColors.GRAY, " of RAM"));
+					TextColors.GRAY, " of memory"));
 		}
+
+		if (isPlayer) {
+			Builder memoryHover = Text.builder();
+			memoryHover.append(Text.of(TextColors.GRAY, "Max Memory: ", TextColors.GOLD, maxMemory, TextColors.GRAY, Text.NEW_LINE,
+				"Allocated Memory: ", TextColors.GOLD, Runtime.getRuntime().totalMemory() / (int) 0x100000, TextColors.GRAY, Text.NEW_LINE,
+				"Used Memory: ", TextColors.GOLD, usedMemory, TextColors.GRAY, Text.NEW_LINE,
+				"Unused Memory: ", TextColors.GOLD, Runtime.getRuntime().freeMemory() / (int) 0x100000, TextColors.GRAY, Text.NEW_LINE,
+				"Free Memory: ", TextColors.GOLD, maxMemory - usedMemory, Text.NEW_LINE,
+				TextColors.DARK_GRAY, "All values in Megabytes (MB)"));
+			memoryText.onHover(TextActions.showText(memoryHover.build()));
+		}
+
 		responseText.append(memoryText.build());
 
 		if (!isPlayer) {
