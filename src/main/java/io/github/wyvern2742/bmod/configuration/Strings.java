@@ -14,6 +14,9 @@ public class Strings {
 	/** Standard Chat Prefix */
 	public static Text PREFIX = Text.of(TextColors.GOLD,"> ",TextColors.GRAY);
 
+	// Cannot run command as console
+	public static Text CONSOLE_EXECUTOR_FAIL = Text.of(PREFIX, TextColors.RED, "Cannot run this command as console");
+
 	// Command summery should be about 40 characters long.
 	public static Text COMMAND_HELP_SUMMERY = Text.of("Show BMod's command list");
 	public static Text COMMAND_HELP_DESCRIPTION = Text.of("Shows all commands registered by BMod, along with summaries of each command.");

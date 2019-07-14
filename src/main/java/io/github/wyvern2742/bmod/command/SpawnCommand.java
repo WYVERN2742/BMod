@@ -31,21 +31,24 @@ public class SpawnCommand extends AbstractCommand {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src instanceof Player) {
-			Player player = (Player) src;
-			try {
-				Optional<Location<World>> spawn = Warps.getWarp("spawn");
-				if (spawn.isPresent()) {
-					player.setLocation(spawn.get());
-					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY,"Teleported to spawn"));
-					return CommandResult.success();
-				} else {
-					src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn is not set"));
-				}
-			} catch (Exception e) {
-				src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to teleport to spawn"));
-				plugin.logger.error("Failed to teleport to spawn", e);
+		if (!(src instanceof Player)) {
+			src.sendMessage(Strings.CONSOLE_EXECUTOR_FAIL);
+			return CommandResult.empty();
+		}
+
+		Player player = (Player) src;
+		try {
+			Optional<Location<World>> spawn = Warps.getWarp("spawn");
+			if (spawn.isPresent()) {
+				player.setLocation(spawn.get());
+				src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY,"Teleported to spawn"));
+				return CommandResult.success();
+			} else {
+				src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn is not set"));
 			}
+		} catch (Exception e) {
+			src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to teleport to spawn"));
+			plugin.logger.error("Failed to teleport to spawn", e);
 		}
 		return CommandResult.empty();
 	}

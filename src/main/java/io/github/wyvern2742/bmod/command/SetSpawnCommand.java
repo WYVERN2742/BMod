@@ -28,17 +28,20 @@ public class SetSpawnCommand extends AbstractCommand {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src instanceof Player) {
-			Player player = (Player) src;
-			try {
-				Warps.setWarp("spawn", player.getLocation());
-				src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn set to current position"));
-				return CommandResult.success();
+		if (!(src instanceof Player)) {
+			src.sendMessage(Strings.CONSOLE_EXECUTOR_FAIL);
+			return CommandResult.empty();
+		}
 
-			} catch (Exception e) {
-				src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to create spawn point"));
-				plugin.logger.error("Failed to set spawn point", e);
-			}
+		Player player = (Player) src;
+		try {
+			Warps.setWarp("spawn", player.getLocation());
+			src.sendMessage(Text.of(Strings.PREFIX, TextColors.GRAY, "Spawn set to current position"));
+			return CommandResult.success();
+
+		} catch (Exception e) {
+			src.sendMessage(Text.of(Strings.PREFIX, TextColors.RED, "Failed to create spawn point"));
+			plugin.logger.error("Failed to set spawn point", e);
 		}
 		return CommandResult.empty();
 	}
