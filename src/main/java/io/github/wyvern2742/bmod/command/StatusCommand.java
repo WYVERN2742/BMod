@@ -39,6 +39,7 @@ public class StatusCommand extends AbstractCommand {
 		boolean isPlayer = (src instanceof Player);
 
 		// Players
+		responseText.append(ListCommand.getPlayers(src), Text.NEW_LINE);
 
 		// Player ping
 		if (players.size() != 0) {
@@ -90,25 +91,28 @@ public class StatusCommand extends AbstractCommand {
 
 		// Loaded Chunks
 		Builder chunkText = Text.builder();
-		chunkText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Loaded Chunks: ",TextColors.GOLD, Chunks.loadedChunks()));
+		chunkText.append(
+				Text.of(Strings.PREFIX, TextColors.GRAY, "Loaded Chunks: ", TextColors.GOLD, Chunks.loadedChunks()));
 		if (isPlayer) {
 			// Add hover for player
 			Builder hoverText = Text.builder();
-			hoverText.append(Text.of(TextColors.GRAY, "Chunks per player: ",TextColors.GOLD, Chunks.loadedChunks() / players.size()));
+			hoverText.append(Text.of(TextColors.GRAY, "Chunks per player: ", TextColors.GOLD,
+					Chunks.loadedChunks() / players.size()));
 			chunkText.onHover(TextActions.showText(hoverText.build()));
 		} else {
 			// Caller is console
 			if (players.size() != 0) {
-				chunkText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Chunks per player: ", TextColors.GOLD, Chunks.loadedChunks() / players.size()));
+				chunkText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Chunks per player: ",
+						TextColors.GOLD, Chunks.loadedChunks() / players.size()));
 			}
 		}
 		responseText.append(Text.of(chunkText.build()));
 
 		// Plugins
 		try {
-			responseText.append(Text.of(Text.NEW_LINE,PluginCommand.getPlugins(src)));
+			responseText.append(Text.of(Text.NEW_LINE, PluginCommand.getPlugins(src)));
 		} catch (PlayerNoPermissionException e) {
-			//No permission to list plugins, fail silently
+			// No permission to list plugins, fail silently
 		}
 
 		// TPS
@@ -127,10 +131,46 @@ public class StatusCommand extends AbstractCommand {
 		} else {
 			tpsColor = TextColors.DARK_RED;
 		}
-		responseText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Ticks Per Second: ", tpsColor, new DecimalFormat("0.00").format(tps)));
+		responseText.append(Text.of(Text.NEW_LINE, Strings.PREFIX, TextColors.GRAY, "Ticks Per Second: ", tpsColor,
+				new DecimalFormat("0.00").format(tps), Text.NEW_LINE));
 
 		// Ram and free resources
 
+		// Note that freeMemory() is the memory inside the JVM that is ready for new
+		// objects
+		// In the case of the server, we are only concerned with the amount of memory
+		// the process
+		// has reserved, and the maximum amount we can reserve.
+		Builder memoryText = Text.builder();
+		// Maximum amount of memory the server process can use (-Xmx)
+		long maxMemory = Runtime.getRuntime().maxMemory();
+
+		// ! This is returning strange values, need to fix and correct to MB
+		if (maxMemory == Integer.MAX_VALUE) {
+			// No max memory limit
+			memoryText.append(Text.of("Using ", TextColors.GOLD, Runtime.getRuntime().totalMemory() / 2048,
+					" ", TextColors.GRAY, "of RAM"));
+		} else {
+			long currentMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+			TextColor memoryColor;
+			if (currentMemory > maxMemory * 0.9) {
+				memoryColor = TextColors.DARK_RED;
+			} else if (currentMemory > maxMemory * 0.8) {
+				memoryColor = TextColors.RED;
+			} else if (currentMemory > maxMemory * 0.7) {
+				memoryColor = TextColors.GOLD;
+			} else if (currentMemory > maxMemory * 0.6) {
+				memoryColor = TextColors.YELLOW;
+			} else if (currentMemory > maxMemory * 0.5) {
+				memoryColor = TextColors.GREEN;
+			} else {
+				memoryColor = TextColors.DARK_GREEN;
+			}
+			memoryText.append(Text.of(Strings.PREFIX, TextColors.GRAY, "Using ", memoryColor, currentMemory/2048, " / ",
+					maxMemory/2048, " (", new DecimalFormat("0.00").format((((double) currentMemory / (double) maxMemory)*100)), "%)",
+					TextColors.GRAY, " of RAM"));
+		}
+		responseText.append(memoryText.build());
 
 		if (!isPlayer) {
 			// Pad out with a newline for better display on consoles
