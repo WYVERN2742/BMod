@@ -18,21 +18,21 @@ and algorithms used.
 
 ---
 
-- [BMod](#BMod)
-	- [Why Minecraft](#Why-Minecraft)
-	- [Functionality](#Functionality)
-		- [Summery](#Summery)
-		- [Common Server commands](#Common-Server-commands)
-		- [Chat Formatting](#Chat-Formatting)
-		- [Land Claiming and Teams](#Land-Claiming-and-Teams)
-	- [User Interface](#User-Interface)
-	- [Technical](#Technical)
-		- [Problems with Modifications](#Problems-with-Modifications)
-		- [Storage](#Storage)
-		- [Contributing](#Contributing)
-			- [Environment Setup](#Environment-Setup)
-			- [Creating Issues](#Creating-Issues)
-			- [Pull Requests](#Pull-Requests)
+- [BMod](#bmod)
+	- [Why Minecraft](#why-minecraft)
+	- [Functionality](#functionality)
+		- [Summery](#summery)
+		- [Common Server commands](#common-server-commands)
+		- [Chat Formatting](#chat-formatting)
+		- [Land Claiming and Teams](#land-claiming-and-teams)
+	- [User Interface](#user-interface)
+	- [Technical](#technical)
+		- [Problems with Modifications](#problems-with-modifications)
+		- [Storage](#storage)
+	- [Contributing](#contributing)
+		- [Environment Setup](#environment-setup)
+		- [Creating Issues](#creating-issues)
+		- [Pull Requests](#pull-requests)
 
 ---
 
@@ -152,9 +152,11 @@ on protected territory (as such effects can effect players, or land).
 Storage must support databases, and an alternate file-based storage. This is due
 to the restricted environment of minecraft servers.
 
-### Contributing
+---
 
-#### Environment Setup
+## Contributing
+
+### Environment Setup
 
 For setting up the developing environment, a simple clone should do the trick.
 then use any IDE you would like, but keep in mind that line endings are `CRLF`
@@ -166,11 +168,11 @@ To build the plugin and then automatically launch the development server, first 
 and then `.\startserver.bat` will automatically build the plugin, move it to the server's plugin directory, and start.
 Keep in mind that the batch file does not check for a successful build before starting the server.
 
-#### Creating Issues
+### Creating Issues
 
 If you find any bugs, or would like to request features, use the [Issue Tracker](https://github.com/WYVERN2742/Bmod/issues)
 Please remember to explain the bug or feature in detail!
 
-#### Pull Requests
+### Pull Requests
 
 If you would like to contribute to the project, please keep in mind that any features must be within the scope of the project, and that there is currently no license attached to the project!
