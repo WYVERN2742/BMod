@@ -1,2 +1,27 @@
-53 minecraft default line width (keep in mind it's variable)
-51 including '> ' prefix
+Commands:
+	Help Command:
+		✔ List Commands @done(19-07-22 19:00)
+		✔ List Aliases @done(19-07-22 19:00)
+		☐ List Arguments
+	✔ List Command @done(19-07-22 18:47)
+	✔ Plugin Command @done(19-07-22 18:47)
+	Home Command:
+		✔ Teleport Home @done(19-07-22 18:47)
+		✔ Set Home @done(19-07-22 18:47)
+		☐ Multiple Homes
+	Spawn Command:
+		✔ Teleport to Spawn @done(19-07-22 18:47)
+		✔ Set Spawn @done(19-07-22 18:47)
+	✔ Status Command @done(19-07-22 18:47)
+	Stats Command:
+		✔ Personal Statistics @done(19-07-22 18:47)
+		☐ Other Player's Statistics
+
+Configuration:
+	☐ Create Configuration File
+	☐ Load configuration File
+
+Standardization:
+	☐ Export Strings to config file
+	☐ Export String Presentation
+	☐ Export Color Settings
